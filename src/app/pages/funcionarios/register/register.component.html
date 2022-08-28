@@ -1,0 +1,35 @@
+<div class="card shadow">
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <h4>Sistema de inscripcion de iniciativa privada</h4>
+    </div>
+  </p-toolbar>
+
+    <p-toolbar>
+      <div class="p-toolbar-group-left">
+        <h5>Listado de solicitud de inscripcion</h5>
+      </div>
+      <div class="p-toolbar-group-right mt-1">
+        <p-button
+          icon="pi pi-plus"
+          (click)="showModalRegsoli()"
+          pTooltip="Nuevo Registro"
+          tooltipPosition="left"
+          styleClass="p-button-help p-button-rounded"
+          label="Nuevo Registro"
+        ></p-button>
+      </div>
+    </p-toolbar>
+
+    <app-modal-new-update></app-modal-new-update>
+    <app-modal-actuados></app-modal-actuados>
+    <app-modal-new-actuado></app-modal-new-actuado>
+    <app-modal-observation></app-modal-observation>
+    <app-modal-new-observation></app-modal-new-observation>
+    <app-modal-user></app-modal-user>
+    <p-tabMenu [model]="searchItems" [activeItem]="searchItems[0]"></p-tabMenu>
+    <app-table-funcionarios></app-table-funcionarios>
+
+</div>
+
+

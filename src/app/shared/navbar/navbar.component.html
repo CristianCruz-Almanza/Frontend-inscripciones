@@ -1,0 +1,44 @@
+<header id="header" class="bg-215C header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+        <a class="logo d-flex align-items-center">
+          <span class="d-none d-lg-block text-white">REGISTROS</span>
+         </a>
+        <i class="pi pi-list toggle-sidebar-btn text-white"
+            style="font-size: 1.5rem">
+        </i>
+        <i>
+          <div >
+            <img src="../../../assets/img/cocha-large-white.png" class="img-fluid" width="250px" alt="">
+          </div>
+        </i>
+    </div>
+    <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+
+            <li class="nav-item dropdown pe-3">
+                <a class="text-white nav-link nav-profile d-flex align-items-center pe-0 cursor-pointer "
+                    (click)="dropdownitems = !dropdownitems; showNotifications=false;">
+                    <!-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> -->
+                    <span class="rounded-circle dropdown-toggle ms-1">Usuario: {{getUser.name}}</span>
+                </a>
+                <ul id="dropdownitems" class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(-16px, 42px, 0px);"
+                    [ngClass]="{'show' : dropdownitems}">
+                    <li class="dropdown-header">
+                        <h6>{{getUser.name}}</h6>
+                        <span>{{getUser.email}}</span>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-center cursor-pointer"
+                            (click)="signOut()">
+                            <i class="fas fa-sign-out"></i>
+                            <span> Cerrar sesión</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</header><!-- End Header -->

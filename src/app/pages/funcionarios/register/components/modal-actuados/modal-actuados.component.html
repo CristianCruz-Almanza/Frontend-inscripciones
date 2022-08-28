@@ -1,0 +1,147 @@
+<p-dialog [header]="'Actuados Funcionario: ' + funcionari?.NombreCompleto" [(visible)]="registerService._displayModelActuados"
+        [breakpoints]="{'960px': '90%' , '576px': '90%'}"  [modal]="true"
+        [style]="{width: '80%'}"[draggable]="false" [resizable]="false"
+    >
+    <form>
+        <div class="card">
+            <div class="row m-1">
+                <div class="col m-1">
+                    <p-chip label="Documento Identidad:" styleClass="mb-1" icon="pi pi-id-card"></p-chip>
+                    <p-tag styleClass="ms-sm-2" icon="pi pi-user" [style]="{'background-color': 'var(--bg-638C)', 'color': '#ffffff'}" value="{{funcionari?.ci}}" [rounded]="true"></p-tag>
+                </div>
+                <div class="col m-1">
+                    <p-chip label="Cargo:" styleClass="mb-1" icon="pi pi-briefcase"></p-chip>
+                    <p-tag styleClass="ms-sm-2" icon="pi pi-user" [style]="{'background-color': 'var(--bg-638C)', 'color': '#ffffff'}" value="{{funcionari?.Cargo}}" [rounded]="true"></p-tag>
+                </div>
+                <div class="col m-1">
+                  <p-button
+                    icon="pi pi-plus"
+                    pTooltip="Agregar Actuado"
+                    (click)="abrirModalNewActuado()"
+                    tooltipPosition="right"
+                    styleClass="p-button-primary p-button-rounded p-button-sm"
+                    label="Agregar Actuado"
+                  ></p-button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div
+                class="row animated fadeIn fast"
+                style="background-color: var(--bg-638C);"
+                *ngIf="actuadosFuncionari.length === 0 && loading === false"
+                >
+                <div class="col-12">
+                    <div class="alert text-center">
+                        <h4 class="alert-heading text-white">Información</h4>
+                        <i class="fa fa-spin fa-refresh fa-2x text-white"></i>
+                        <p class="mb-0 text-white">No se encontraron registros</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <p-progressSpinner *ngIf="loading" strokeWidth="5"></p-progressSpinner>
+            </div>
+
+            <p-table
+                *ngIf="!loading && actuadosFuncionari.length > 0"
+                [value]="actuadosFuncionari"
+                styleClass="p-datatable-sm p-datatable-striped animated fadeIn"
+                [scrollable]="true"
+                scrollHeight="250px"
+                [resizableColumns]="true"
+                [rowHover]="true"
+                >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="deUnidad"
+                            style="min-width: 200px">
+                            De unidad<p-sortIcon></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="aUnidad"
+                            style="min-width: 200px">
+                            A unidad<p-sortIcon></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="fechaEmision"
+                            style="min-width: 150px">
+                            Fecha de emisión<p-sortIcon></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="fechaRecepcion"
+                            style="min-width: 150px">
+                            Fecha recepción<p-sortIcon></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="Asunto"
+                            style="min-width: 280px">
+                            Asunto<p-sortIcon></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="Opciones"
+                            style="min-width: 150px">
+                            Opciones<p-sortIcon></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-detailsActuados>
+                    <tr>
+                        <td style="min-width: 200px"
+                            [pTooltip]="detailsActuados.deUnidad" tooltipPosition="top">
+                            {{ detailsActuados.deUnidad }}
+                        </td>
+
+                        <td style="min-width: 200px"
+                            [pTooltip]="detailsActuados.aUnidad" tooltipPosition="top">
+                            {{ detailsActuados.aUnidad }}
+                        </td>
+                        <td style="min-width: 150px"
+                            [pTooltip]="detailsActuados.fechaEmision" tooltipPosition="top">
+                            {{ detailsActuados.fechaEmision }}
+                        </td>
+                        <td style="min-width: 150px"
+                            [pTooltip]="detailsActuados.fechaRecepcion" tooltipPosition="top">
+                            {{ detailsActuados.fechaRecepcion }}
+                        </td>
+                        <td style="min-width: 280px;text-align: left; white-space:normal"
+                            [pTooltip]="detailsActuados.Asunto" tooltipPosition="top">
+                            {{ detailsActuados.Asunto }}
+                        </td>
+                        <td style="min-width: 150px" >
+                            <button
+                                pButton
+                                pTooltip="Ver observaciones"
+                                (click)="openModalObservations(detailsActuados)"
+                                tooltipPosition="top"
+                                icon="pi pi-list"
+                                class="p-button-rounded p-button-warning ms-1"
+                            ></button>
+                            <button
+                                pButton
+                                pTooltip="Agregar observación"
+                                (click)="openModalNewObservation(detailsActuados)"
+                                tooltipPosition="top"
+                                icon="pi pi-exclamation-circle"
+                                class="p-button-rounded p-button-help ms-1"
+                            ></button>
+                      </td>
+
+                    </tr>
+                </ng-template>
+            </p-table>
+            <p-paginator
+                *ngIf="!loading && actuadosFuncionari.length > 0"
+                [rows]="rows"
+                [rowsPerPageOptions]="[25,50]"
+                (onPageChange)="paginate($event)"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="Mostrando del {{ from }} al {{ to }} total de {{
+                    total
+                }}"
+                [totalRecords]="total"
+            ></p-paginator>
+        </div>
+    </form>
+
+    <ng-template pTemplate="footer">
+        <p-button  (click)="closeModalRequestInfo()" label="Cerrar" styleClass="p-button-text p-button-rounded"></p-button>
+    </ng-template>
+</p-dialog>

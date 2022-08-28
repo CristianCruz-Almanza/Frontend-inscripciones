@@ -1,0 +1,92 @@
+<p-dialog
+  [header]="'Observaciones'"
+  [(visible)]="observationsService._displayModel"
+  [modal]="true"
+  [breakpoints]="{ '960px': '75vw', '576px': '95%' }"
+  [style]="{ width: '55vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+    <form>
+        <div class="card">
+            <div
+                class="row animated fadeIn fast"
+                *ngIf="observations.length === 0 && loading === false"
+                >
+                <div class="col-12">
+                    <div class="alert text-center" style="background-color: var(--bg-638C);">
+                        <h4 class="alert-heading text-white">Información</h4>
+                        <i class="fa fa-spin fa-refresh fa-2x text-white"></i>
+                        <p class="mb-0 text-white">No se encontraron registros</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <p-progressSpinner *ngIf="loading" strokeWidth="5"></p-progressSpinner>
+            </div>
+
+            <p-table
+                *ngIf="!loading && observations.length > 0"
+                [value]="observations"
+                styleClass="p-datatable-sm p-datatable-striped animated fadeIn"
+                [scrollable]="true"
+                scrollHeight="250px"
+                [resizableColumns]="true"
+                [rowHover]="true"
+                >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="Observacion"
+                            style="min-width: 350px">
+                            Observación<p-sortIcon></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="Fecha"
+                            style="min-width: 200px">
+                            Fecha<p-sortIcon></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="Estado"
+                            style="min-width: 130px">
+                            Estado<p-sortIcon></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-detailsObservation>
+                    <tr>
+                        <td style="min-width: 350px; text-align: left; white-space:normal"
+                            [pTooltip]="detailsObservation.Observacion" tooltipPosition="top">
+                            {{ detailsObservation.Observacion }}
+                        </td>
+
+                        <td style="min-width: 200px"
+                            [pTooltip]="detailsObservation.Fecha" tooltipPosition="top">
+                            {{ detailsObservation.Fecha}}
+                        </td>
+                        <td style="min-width: 130px"
+                            [pTooltip]="detailsObservation.Estado" tooltipPosition="top">
+                            {{ detailsObservation.Estado ? 'ACTIVO' : 'INACTIVO'}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <!-- <p-paginator
+                *ngIf="!loading && observationsActuado.length > 0"
+                [rows]="rows"
+                [rowsPerPageOptions]="[25,50]"
+                (onPageChange)="paginate($event)"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="Mostrando del {{ from }} al {{ to }} total de {{
+                    total
+                }}"
+                [totalRecords]="total"
+            ></p-paginator> -->
+        </div>
+    </form>
+  <ng-template pTemplate="footer">
+    <p-button
+      (click)="closeModal()"
+      label="Cerrar"
+      styleClass="p-button-text p-button-sm"
+    ></p-button>
+  </ng-template>
+</p-dialog>

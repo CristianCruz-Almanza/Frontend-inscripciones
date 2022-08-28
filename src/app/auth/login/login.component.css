@@ -1,0 +1,16 @@
+.gradient-custom-2 {
+  background: rgba(174,24,87,1);
+  background: -webkit-linear-gradient(to right, rgba(72,39,120,1), rgba(0,172,216,1) rgba(0,152,119,1) #b44593);
+}
+
+@media (min-width: 768px) {
+  .gradient-form {
+      height: 100vh !important;
+  }
+}
+@media (min-width: 769px) {
+  .gradient-custom-2 {
+      border-top-right-radius: .3rem;
+      border-bottom-right-radius: .3rem;
+  }
+}

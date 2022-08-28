@@ -1,0 +1,79 @@
+<section class="h-100 gradient-form img-fluid" style="background-image: url('../../../assets/img/img2.jpg')">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-10">
+        <div class="card rounded-3 text-black">
+          <div class="row g-0">
+            <div class="col-lg-6">
+              <div class="card-body p-md-5 mx-md-4">
+              <div class="text-center">
+                <!-- <img src="../../../assets/img/cocha-somos-innovacion-blanco.png"
+                  class="img-fluid"
+                  style="width: 400px;" alt="logo"> -->
+                <!-- <h4 class="mt-1 mb-5 pb-1">We are The Lotus Team</h4> -->
+              </div>
+              <div class="">
+
+                <img src="../../../assets/img/cocha-somos-innovacion-blanco.png"
+                  class="img-fluid"
+                  style="width: 100%;" >
+
+            </div>
+              <h3 class="mb-1 text-center colorText">Bienvenido</h3>
+          <form  class="d-grid" [formGroup]="loginForm" (ngSubmit)="null">
+              <div class="grid p-fluid mb-2">
+                  <div class="col mb-2">
+                      <span>Correo</span>
+                      <span class="p-input-icon-left">
+                          <i class="pi pi-at"></i>
+                          <input type="text" pInputText [pKeyFilter]="expRegName" [class.ng-dirty]="campoNoValido('email')" formControlName="email"/>
+                      </span>
+                      <div class="col text-danger">
+                        <p *ngIf="campoNoValido('email');">El correo electrónico no es valido</p>
+                      </div>
+                  </div>
+                  <div class="col mt-2">
+                    <span>Contraseña</span>
+                    <span class="p-input-icon-left">
+                      <i class="pi pi-key"></i>
+                      <input pInputText type="password" [class.ng-dirty]="campoNoValido('password')" formControlName="password"/>
+                    </span>
+                    <div class="col text-danger">
+                      <p *ngIf="campoNoValido('password');">La contraseña es requerida</p>
+                    </div>
+                  </div>
+
+              </div>
+              <!-- <div class="form-check d-flex justify-content-start mt-2">
+                <p-checkbox  formControlName="remember" [binary]="true" inputId="binary"></p-checkbox>
+                <label class="ms-2 cursor-pointer" for="binary">Recordar correo electrónico</label>
+              </div> -->
+              <button pButton pRipple type="button"
+                [loading]="loading" (click)="login()"
+                label="Ingresar" class="p-button-rounded mt-4">
+              </button>
+              <div class="col mt-2">
+                <button pButton pRipple
+                  type="button"
+                  label="Registrate aqui"
+                  class="p-button-text"
+                  (click)="showModalUsers()"
+                  ></button>
+              </div>
+          </form>
+              </div>
+            </div>
+            <div class="col-lg-6 d-flex">
+
+                <img src="../../../assets/img/img2.jpg"
+                  class="img-fluid"
+                  style="width: auto;" alt="logo">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<app-register-user></app-register-user>

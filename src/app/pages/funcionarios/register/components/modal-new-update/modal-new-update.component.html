@@ -1,0 +1,164 @@
+<p-dialog
+  [header]="!false
+        ? 'Registro Usuario'
+        : 'Modificar Usuario'"
+  [(visible)]="registerService._displayModel"
+  [modal]="true"
+  [breakpoints]="{ '960px': '75vw','576px': '95%' }"
+  [style]="{ width: '40vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <form [formGroup] = "formFuncionario">
+    <div class="p-fluid grid">
+      <div class="field col-12">
+        <div class="field">
+          <div class="row">
+            <div class="col">
+              <label class="block">
+                Documento Identidad: <span class="text-danger">* </span>
+                <i class="pi pi-question-circle"
+                  [pTooltip] ="'Ingresa tu numero de carnet y presiona en \'Buscar\', Si tenemos tus datos rellenaremos el formulario'" tooltipPosition="right"
+                ></i>
+              </label>
+              <div class="p-inputgroup">
+                <input
+                  type="number"
+                  [min]="0"
+                  formControlName="ci"
+                  style="text-transform: uppercase"
+                  pInputText
+                  [pKeyFilter]="expRegValid"
+                  (keyup.enter)="searchFuncionariByCi()"
+                  [class.ng-dirty]="inputValid('ci')"
+                  placeholder="Ej.: 952....2"
+                  class="mt-1"
+                />
+                <button type="button" pButton
+                  pRipple icon="pi pi-search"
+                  class="mt-1"  iconPos="left"
+                  label="Buscar"
+                  (click)="searchFuncionariByCi()"
+                  [loading]="loadingSearch"
+                  [pTooltip] ="'Buscar mis datos'" tooltipPosition="top"
+                  >
+                </button>
+              </div>
+              <small *ngIf="inputValid('ci')" class="p-error block"
+                >{{messageError('ci', true)}}
+              </small>
+            </div>
+          </div>
+
+          <label class="block ms-1">
+            Nombres: <span class="text-danger">*</span>
+          </label>
+          <div class="row ms-1">
+            <input
+              type="text"
+              formControlName="name"
+              style="text-transform: uppercase"
+              pInputText
+              [pKeyFilter]="expRegValid"
+              [class.ng-dirty]="inputValid('name')"
+              placeholder="Ej.: DANIEL"
+              class="mt-1"
+            />
+            <small *ngIf="inputValid('name')" class="p-error block"
+              >{{messageError('name')}}
+            </small>
+          </div>
+
+          <label class="block ms-1">
+            Primer Apellido: <span class="text-danger">*</span>
+          </label>
+          <div class="row ms-1">
+            <input
+              type="text"
+              formControlName="paternal"
+              style="text-transform: uppercase"
+              pInputText
+              [pKeyFilter]="expRegValid"
+              [class.ng-dirty]="inputValid('paternal')"
+              placeholder="Ej.: QUIROGA"
+              class="mt-1"
+            />
+            <small *ngIf="inputValid('paternal')" class="p-error block"
+              >{{messageError('paternal')}}
+            </small>
+          </div>
+
+          <label class="block ms-1">
+            Segundo Apellido:
+          </label>
+          <div class="row ms-1">
+            <input
+              type="text"
+              formControlName="maternal"
+              style="text-transform: uppercase"
+              pInputText
+              [pKeyFilter]="expRegValid"
+              [class.ng-dirty]="inputValid('maternal')"
+              placeholder="Ej.: ANDRADE"
+              class="mt-1"
+            />
+            <small *ngIf="inputValid('maternal')" class="p-error block"
+              >{{messageError('maternal')}}
+            </small>
+          </div>
+
+          <label class="block ms-1">
+            Cargo: <span class="text-danger">*</span>
+          </label>
+          <div class="row ms-1">
+            <input
+              type="text"
+              formControlName="cargo"
+              style="text-transform: uppercase"
+              pInputText
+              [pKeyFilter]="expRegValid"
+              [class.ng-dirty]="inputValid('cargo')"
+              placeholder="Ej.: Jefe Dpto."
+              class="mt-1"
+            />
+            <small *ngIf="inputValid('cargo')" class="p-error block"
+              >{{messageError('cargo')}}
+            </small>
+          </div>
+          <label class="block ms-1">
+            Unidad:<span class="text-danger">*</span>
+          </label>
+          <div class="row ms-1">
+            <input
+              type="text"
+              formControlName="unidad"
+              style="text-transform: uppercase"
+              pInputText
+              [pKeyFilter]="expRegValid"
+              [class.ng-dirty]="inputValid('unidad')"
+              placeholder="Ej.: ASESORIA LEGAL"
+              class="mt-1"
+            />
+            <small *ngIf="inputValid('unidad')" class="p-error block"
+              >{{messageError('unidad')}}
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <p-button
+      (click)="loading ? null : newFuncionari()"
+      styleClass="p-button-sm"
+      label="Guardar"
+      icon="pi pi-save"
+      [loading]="loading"
+    ></p-button>
+    <p-button
+      (click)="closeModal()"
+      label="Cerrar"
+      styleClass="p-button-text p-button-sm"
+    ></p-button>
+  </ng-template>
+</p-dialog>

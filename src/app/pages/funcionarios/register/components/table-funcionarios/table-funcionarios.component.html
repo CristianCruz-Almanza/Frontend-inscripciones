@@ -1,0 +1,91 @@
+
+<div class="row animated fadeIn fast"
+*ngIf="regSoli.length === 0 && loading === false">
+<div class="col-12">
+  <div class="alert text-center" style="background-color: RGB(109,86,160);">
+    <h4 class="alert-heading text-white">Información</h4>
+    <i class="fa fa-spin fa-refresh fa-2x text-white"></i>
+    <p class="mb-0 text-white">No se encontraron registros</p>
+</div>
+</div>
+</div>
+<p-table  *ngIf="!loading" [value]="regSoli" styleClass="p-datatable-sm p-datatable-striped animated fadeIn"
+    [scrollable]="true" [scrollHeight]="heigthtable"  [resizableColumns]="true" [rowHover]="true" >
+<ng-template pTemplate="caption">
+<div class="text-center">
+<p-dropdown [options]="searchFor" [(ngModel)]="searchSelect" placeholder="Buscar por:"  optionLabel="name" optionValue="code"></p-dropdown>
+<span class="p-input-icon-right ms-2 mt-1">
+    <i class="pi pi-search"></i>
+    <input type="text" style="text-transform:uppercase"
+        pInputText placeholder="Escriba para filtrar..."
+        [formControl]="txtTermino"
+        (keyup)="searchDewey()"
+    />
+</span>
+</div>
+</ng-template>
+<ng-template pTemplate="header">
+<tr>
+<th pSortableColumn="id" style="min-width:250px;max-width:250px">Codigo<p-sortIcon></p-sortIcon></th>
+<th pSortableColumn="nameperson" style="min-width:350px;max-width:350px">Nombre del interesado<p-sortIcon></p-sortIcon></th>
+<th pSortableColumn="nameproject" style="min-width:350px;max-width:350px"pTooltip="Tipo de constitucion">Tipo de constitucion<p-sortIcon></p-sortIcon></th>
+<th pSortableColumn="constitution" style="min-width:200px" >Nombre proyecto<p-sortIcon></p-sortIcon></th>
+<th pSortableColumn="yearexperience" style="min-width:200px">Años de experiencia<p-sortIcon></p-sortIcon></th>
+<th pSortableColumn="timeproposal" style="min-width:200px">Tiempo estimado<p-sortIcon></p-sortIcon>
+<th pSortableColumn="status" style="min-width:150px">Estado<p-sortIcon></p-sortIcon>
+  </th>
+<th style="min-width:120px">Opciones</th>
+</tr>
+</ng-template>
+<ng-template pTemplate="body" let-regSoli>
+<tr>
+<td style="min-width:250px;max-width:250px"
+    [pTooltip] ="regSoli.id" tooltipPosition="top"
+    >
+    {{regSoli.id}}</td>
+<td style="min-width:350px;max-width:350px"
+    [pTooltip] ="regSoli.nameperson" tooltipPosition="top">
+    {{regSoli.nameperson}}
+</td>
+<td style="min-width:350px;max-width:350px"
+    [pTooltip] ="regSoli.constitution" tooltipPosition="top">
+    {{regSoli.constitution}}
+</td>
+<td style="min-width:200px"
+    [pTooltip] ="regSoli.nameproject" tooltipPosition="top">
+    {{regSoli.nameproject}}
+</td>
+<td style="min-width:200px"
+    [pTooltip] ="regSoli.yearexperience" tooltipPosition="top">
+    {{regSoli.yearexperience + " AÑOS"}}
+</td>
+<td style="min-width:200px"
+    [pTooltip] ="regSoli.timeproposal" tooltipPosition="top">
+    {{regSoli.timeproposal + " DIAS"}}
+</td>
+<td style="min-width: 150px">
+    <p-tag
+      styleClass="mr-2"
+      [rounded]="true"
+      [icon]="regSoli.status ? 'pi pi-check' : 'pi pi-times'"
+      [severity]="regSoli.status ? 'success' : 'danger'"
+      [value]="regSoli.status ? 'Enviado' : 'Pendiente'"
+    ></p-tag>
+</td>
+<td style="min-width:120px">
+    <div *ngIf="regSoli.status">
+        <button pButton pTooltip="Editar"  tooltipPosition="bottom" (click)="editRegsoliShowModal(regSoli)" pRipple icon="pi pi-pencil" class="p-button-rounded p-button-help"></button>
+        <button pButton pTooltip="Imprimir"  tooltipPosition="bottom" (click)="printPdf(regSoli)" pRipple icon="pi pi-print" class="p-button-rounded p-button-danger ms-1"></button>
+
+    </div>
+</td>
+</tr>
+</ng-template>
+
+</p-table>
+<p-paginator [rows]="rows" [rowsPerPageOptions]="[50,100,200]"
+(onPageChange)="paginate($event)" [showCurrentPageReport]="true"
+currentPageReportTemplate="Mostrando del {{from}} al {{to}} total de {{total}}"
+[totalRecords]="total">
+</p-paginator>
+

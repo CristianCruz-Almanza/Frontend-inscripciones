@@ -1,0 +1,159 @@
+<p-dialog
+styleClass="customDialog animated animate fadeInTopLeft"
+  [header]="!userService._isEdit
+        ? 'Crear Usuario'
+        : 'Modificar Usuario'"
+  [(visible)]="userService._displayModalUser"
+  [modal]="true"
+  [breakpoints]="{ '960px': '75vw', '576PX': '95%' }"
+  [style]="{ width: '35vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <form [formGroup]="userForm">
+    <div class="p-fluid grid">
+      <div class="field col-12">
+
+        <div class="field">
+          <label class="block"
+            >Nombre <span class="text-danger">*</span></label
+          >
+          <input
+          type="text"
+          formControlName="name"
+          style="text-transform: uppercase"
+          pInputText
+          [pKeyFilter]="expRegValid"
+          [class.ng-dirty]="inputValid('name')"
+          placeholder="Ej.: CARLOS O..."
+          class="mt-1"
+          />
+          <small *ngIf="inputValid('name')" class="p-error block"
+            >{{messageError('name')}}</small
+          >
+        </div>
+        <div class="field">
+          <label class="block"
+            >Apeliido P <span class="text-danger">*</span></label
+          >
+          <input
+          type="text"
+          formControlName="paternal"
+          style="text-transform: uppercase"
+          pInputText
+          [pKeyFilter]="expRegValid"
+          [class.ng-dirty]="inputValid('paternal')"
+          placeholder="Ej.: CARLOS O..."
+          class="mt-1"
+          />
+          <small *ngIf="inputValid('paternal')" class="p-error block"
+            >{{messageError('paternal')}}</small
+          >
+        </div>
+        <div class="field">
+          <label class="block"
+            >Apellido M <span class="text-danger">*</span></label
+          >
+          <input
+            ttype="text"
+            formControlName="maternal"
+            style="text-transform: uppercase"
+            pInputText
+            [pKeyFilter]="expRegValid"
+            [class.ng-dirty]="inputValid('maternal')"
+            placeholder="Ej.: CARLOS O..."
+            class="mt-1"
+          />
+          <small *ngIf="inputValid('maternal')" class="p-error block"
+            >{{messageError('maternal')}}</small
+          >
+        </div>
+        <div class="row mt-1">
+          <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+            <label class="block">
+              N. Carnet: <span class="text-danger">*</span>
+            </label>
+            <input
+              type="number"
+              pInputText
+              formControlName="ci"
+              placeholder="EJ. 77777777"
+              class="mt-1"
+              pKeyFilter="int"
+              [class.ng-dirty]="inputValid('ci')"
+            />
+            <small *ngIf="inputValid('ci')" class="p-error block"
+              >{{messageError('ci', true)}}
+            </small>
+          </div>
+          <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+            <label class="block"
+              >Telefono/Celular<span class="text-danger">*</span></label
+            >
+            <input
+              type="number"
+              pInputText
+              formControlName="cellphone"
+              placeholder="EJ. 77777777"
+              class="mt-1"
+              pKeyFilter="int"
+              [class.ng-dirty]="inputValid('cellphone')"
+            />
+            <small
+              *ngIf="inputValid('cellphone')"
+              class="p-error block"
+              >El telefono/celular requiere de minimo 8 números</small
+            >
+          </div>
+        </div>
+        </div>
+        <div class="field mt-2">
+            <label class="block"
+              >Correo<span class="text-danger"> *</span></label
+            >
+            <input
+            type="text"
+            pInputText
+            formControlName="email"
+            name="email"
+            placeholder="EJ. .....@...com"
+            class="mt-1"
+            [class.ng-dirty]="inputValid('email')"
+            />
+            <small
+                *ngIf="inputValid('email')"
+                class="p-error block"
+                >El correo no es valido</small
+
+            >
+        </div>
+        <div class="field mt-2">
+          <label class="block"
+            >Contraseña<span class="text-danger"> *</span></label
+          >
+          <p-password  [toggleMask]="true"
+                       formControlName="password"
+                       [class.ng-dirty]="inputValid('password')"
+          ></p-password>
+          <small *ngIf="inputValid('password')" class="p-error block"
+            >{{messageError('password')}}</small
+          >
+      </div>
+      </div>
+
+  </form>
+  <ng-template pTemplate="footer">
+    <p-button
+      (click)="!loading ?  saveUser() : null"
+      styleClass="p-button-sm"
+      label="Guardar"
+      icon="pi pi-save"
+      [loading]="loading"
+    ></p-button>
+    <p-button
+      (click)="closeModal()"
+      label="Cancelar"
+      styleClass="p-button-text p-button-sm"
+    ></p-button>
+  </ng-template>
+</p-dialog>

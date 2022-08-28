@@ -1,0 +1,184 @@
+<p-dialog
+  [header]="!regsoliService._isEdit
+        ? 'Formulario de registro'
+        : 'Modificar Registro'"
+  [(visible)]="regsoliService._displayModalRegsoli"
+  [modal]="true"
+  [breakpoints]="{ '960px': '75vw', '576PX': '95%' }"
+  [style]="{ width: '70vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <form [formGroup]="userForm">
+    <div class="p-fluid grid">
+      <div class="field col-12">
+        <div class="field">
+          <label class="block"
+            >Nombre del interesado <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            style="text-transform: uppercase"
+            pInputText
+            formControlName="nameperson"
+            placeholder="EJ. PERSONA/ENTIDAD/INSTITUCION"
+            class="mt-1"
+            [class.ng-dirty]="inputValid('nameperson')"
+          />
+          <small *ngIf="inputValid('nameperson')" class="p-error block"
+            >{{messageError('nameperson')}}</small
+          >
+        </div>
+        <div class="field">
+          <label class="block"
+            >Tipo de Constitucion (Si corresponde)<span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            style="text-transform: uppercase"
+            pInputText
+            formControlName="constitution"
+            placeholder="EJ. CONSTITUCION, 1826"
+            class="mt-1"
+            [class.ng-dirty]="inputValid('constitution')"
+          />
+          <small *ngIf="inputValid('constitution')" class="p-error block"
+          >{{messageError('constitution')}}</small
+        >
+        </div>
+        <div class="field">
+          <label class="block"
+            >Nombre del proyecto de interés <span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            style="text-transform: uppercase"
+            pInputText
+            formControlName="nameproject"
+            placeholder="EJ. CIUDAD INTELIGENTE"
+            class="mt-1"
+            [class.ng-dirty]="inputValid('nameproject')"
+          />
+          <small *ngIf="inputValid('nameproject')" class="p-error block"
+            >{{messageError('nameproject')}}</small
+          >
+        </div>
+        <br>
+        <div class="field">
+          <p-fieldset >
+            <ng-template pTemplate="header">Experiencia e inversion en proyectos similares  </ng-template>
+            <div class="row mt-2">
+              <div class="col">
+                <label class="block"
+                  >Años de experiencia <span class="text-danger">*</span></label
+                >
+                <p-inputNumber
+                  formControlName = "yearexperience"
+                  [showButtons]="true"
+                  buttonLayout="horizontal"
+                  [class.ng-dirty]="inputValid('yearexperience')"
+                  class="mt-1"
+                  inputId="horizontal"
+                  spinnerMode="horizontal"
+                  [step]="1"
+                  decrementButtonClass="p-button-danger"
+                  incrementButtonClass="p-button-success"
+                  incrementButtonIcon="pi pi-plus"
+                  decrementButtonIcon="pi pi-minus"
+                  inputId="minmax-buttons"
+                  [min]="0"
+                  [max]="100">
+
+
+              </p-inputNumber>
+              <small *ngIf="inputValid('yearexperience')" class="p-error block">{{
+                messageError("yearexperience")
+              }}</small>
+              </div>
+              <div class="col">
+                <label class="block"
+                  >Inversion en proyectos similiares<span class="text-danger"> *</span></label
+                >
+                <p-inputNumber
+                  formControlName = "investment"
+                  class="mt-1"
+                  [showButtons]="true"
+                  inputId="horizontal"
+                  spinnerMode="horizontal"
+                  [step]="1"
+                  [class.ng-dirty]="inputValid('investment')"
+                  [min]="1000"
+                  [max]="500000">
+                </p-inputNumber>
+                <small *ngIf="inputValid('investment')" class="p-error block">{{
+                  messageError("investment")
+                }}</small>
+            </div>
+            </div>
+        </p-fieldset>
+        </div>
+        <div class="col">
+          <label class="block"
+            >Tiempo estimado en dias para presentacion formal<span class="text-danger"> *</span></label
+          >
+          <p-inputNumber
+            formControlName = "timeproposal"
+            [class.ng-dirty]="inputValid('timeproposal')"
+            mode="decimal"
+            [showButtons]="true"
+            inputId="minmax-buttons"
+            [min]="0"
+            [max]="120">
+          </p-inputNumber>
+          <small *ngIf="inputValid('timeproposal')" class="p-error block">{{
+            messageError("timeproposal")
+          }}</small>
+      </div>
+        <div class="field">
+          <label class="block"
+            >Capacidad para financiar el proyecto <span class="text-danger">*</span></label
+          >
+          <div class="row mt-2">
+            <div class="col col-sm-2">
+              <p-inputSwitch formControlName="financing"></p-inputSwitch>
+            </div>
+            <div class="col">
+              <p-tag
+                [rounded]="true"
+                [icon]="
+                  userForm.get('financing')!.value
+                    ? 'pi pi-check'
+                    : 'pi pi-times'
+                "
+                [severity]="userForm.get('financing')!.value ? 'info' : 'danger'"
+                [value]="
+                  userForm.get('financing')!.value
+                    ? 'SI'
+                    : 'NO'
+                "
+              ></p-tag>
+            </div>
+          </div>
+
+        <small *ngIf="inputValid('financing')" class="p-error block">{{
+          messageError("financing")
+        }}</small>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <p-button
+      (click)="!loading ? regsoliService._isEdit ? editRegSoli() : saveRegSoli() : null"
+      styleClass="p-button-sm"
+      label="Guardar"
+      icon="pi pi-save"
+      [loading]="loading"
+    ></p-button>
+    <p-button
+      (click)="closeModal()"
+      label="Cancelar"
+      styleClass="p-button-text p-button-sm"
+    ></p-button>
+  </ng-template>
+</p-dialog>

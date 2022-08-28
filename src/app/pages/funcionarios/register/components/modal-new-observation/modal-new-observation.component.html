@@ -1,0 +1,83 @@
+<p-dialog
+  [header]="'Registro Observación'"
+  [(visible)]="observationsService._displayModelNewObservation"
+  [modal]="true"
+  [breakpoints]="{ '960px': '75vw','576px': '95%' }"
+  [style]="{ width: '40vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  [contentStyle]="{'overflow': 'visible'}"
+>
+  <form [formGroup] = "formObservation">
+
+    <div class="p-fluid grid">
+      <div class="field col-12">
+        <div class="field">
+          <label class="block ms-1">
+            Observación: <span class="text-danger">*</span>
+          </label>
+          <div class="row ms-1">
+            <input
+              type="text"
+              formControlName="observation"
+              style="text-transform: uppercase"
+              pInputText
+              [pKeyFilter]="expRegValid"
+              [class.ng-dirty]="inputValid('observation')"
+              placeholder="Ej.: Falta detalles"
+              class="mt-1"
+            />
+            <small *ngIf="inputValid('observation')" class="p-error block"
+              >{{messageError('observation')}}
+            </small>
+          </div>
+
+          <label class="block ms-1">
+            Fecha: <span class="text-danger">*</span>
+          </label>
+          <div class="row ms-1">
+            <p-calendar inputId="basic"
+              formControlName="date">
+            </p-calendar>
+            <small *ngIf="inputValid('date')" class="p-error block"
+              >{{messageError('date')}}
+            </small>
+          </div>
+
+          <!-- <label class="block ms-1">
+            Estado:
+          </label>
+          <div class="row ms-1">
+            <input
+              type="text"
+              formControlName="status"
+              style="text-transform: uppercase"
+              pInputText
+              [pKeyFilter]="expRegValid"
+              [class.ng-dirty]="inputValid('status')"
+              placeholder="Ej.: ACTIVO/INACTIVO"
+              class="mt-1"
+            />
+            <small *ngIf="inputValid('status')" class="p-error block"
+              >{{messageError('status')}}
+            </small>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <p-button
+      (click)="newObservation()"
+      styleClass="p-button-sm"
+      label="Guardar"
+      icon="pi pi-save"
+      [loading]="loading"
+    ></p-button>
+    <p-button
+      (click)="closeModal()"
+      label="Cerrar"
+      styleClass="p-button-text p-button-sm"
+    ></p-button>
+  </ng-template>
+</p-dialog>
